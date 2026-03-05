@@ -1,0 +1,171 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Tech Nova</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Tech Nova</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categories.html">Recipes</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="submit.html">Submit Recipe</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+            <div class="nav-auth">
+                <button class="btn-login" id="loginBtn">Login</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="my-recipes.html"><i class="fas fa-book"></i> My Recipes</a>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Preserving India's Culinary Heritage</h1>
+            <p>Tech Nova is a digital platform dedicated to documenting and preserving traditional Indian recipes from every corner of our diverse nation.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Document</h3>
+                    <p>We help families document their traditional recipes, ensuring that precious culinary knowledge is preserved for future generations.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Celebrate</h3>
+                    <p>Celebrate the incredible diversity of Indian cuisine, from the dosas of South India to the biryanis of the Mughal era.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Connect</h3>
+                    <p>Connect with other food enthusiasts and share the stories behind your family's favorite dishes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2>Our Mission</h2>
+                <p>India's culinary heritage is one of the richest and most diverse in the world. Each region, each state, each community has its own unique recipes that have been passed down through generations. Unfortunately, many of these recipes are at risk of being lost as modern lifestyles change and older generations pass away.</p>
+                <br>
+                <p>Tech Nova aims to be a digital repository for these precious recipes, creating a platform where anyone can share and discover traditional Indian dishes. We believe that food is not just about nutrition - it's about culture, history, family, and love.</p>
+                <br>
+                <p>Our platform allows users to submit their family recipes, complete with the cultural stories and traditions that make each dish special. By doing so, we hope to preserve this invaluable part of India's cultural heritage for future generations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="about-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Offer</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Easy Search</h3>
+                    <p>Find recipes by name, ingredients, region, or category. Our powerful search makes it simple to discover new dishes.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access recipes on any device - phone, tablet, or laptop. Cook along with step-by-step instructions.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Share & Preserve</h3>
+                    <p>Share your family recipes with the world. Help preserve culinary traditions for future generations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Tech Nova</span>
+                    </a>
+                    <p>Preserving Indian culinary heritage</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Recipes</a></li>
+                        <li><a href="search.html">Search</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="categories.html?category=breakfast">Breakfast</a></li>
+                        <li><a href="categories.html?category=lunch">Lunch</a></li>
+                        <li><a href="categories.html?category=desserts">Desserts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-envelope"></i> info@technova.com</p>
+                    <p><i class="fas fa-phone"></i> +91 1234567890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tech Nova. Preserving Indian Culinary Heritage.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+

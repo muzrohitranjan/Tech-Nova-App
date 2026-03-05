@@ -1,0 +1,160 @@
+*9+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipes - Tech Nova</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Tech Nova</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categories.html">Recipes</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="submit.html">Submit Recipe</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-auth">
+                <button class="btn-login" id="loginBtn">Login</button>
+                <div class="user-menu" id="userMenu">
+                    <button class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="my-recipes.html"><i class="fas fa-book"></i> My Recipes</a>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1>My Recipes</h1>
+            <p>Manage your submitted recipes</p>
+        </div>
+    </section>
+
+    <!-- My Recipes Section -->
+    <section class="recipes-section">
+        <div class="container">
+            <div class="recipes-grid" id="myRecipesGrid">
+                <!-- Recipes loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Tech Nova</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tech Nova. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // My Recipes Page JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMyRecipes();
+        });
+
+        async function loadMyRecipes() {
+            const grid = document.getElementById('myRecipesGrid');
+            if (!grid) return;
+
+            const authToken = localStorage.getItem('auth_token');
+            
+            if (!authToken) {
+                grid.innerHTML = '<p class="no-recipes">Please login to view your recipes</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8000/api/recipes/my-recipes', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayRecipes(grid, data.recipes || []);
+                } else {
+                    displayDemoRecipes(grid);
+                }
+            } catch (error) {
+                console.error('Error loading recipes:', error);
+                displayDemoRecipes(grid);
+            }
+        }
+
+        function displayRecipes(container, recipes) {
+            if (recipes.length === 0) {
+                container.innerHTML = '<p class="no-recipes">You haven\'t submitted any recipes yet. <a href="submit.html">Submit your first recipe!</a></p>';
+                return;
+            }
+            container.innerHTML = recipes.map(recipe => createRecipeCard(recipe)).join('');
+        }
+
+        function displayDemoRecipes(container) {
+            const demoRecipes = [
+                { id: '1', title: 'My Masala Dosa', description: 'Family recipe', cuisine: 'South Indian', prep_time: 30, cook_time: 20, difficulty: 'medium', image_url: 'https://images.unsplash.com/photo-1630383249896-424e482df921?w=400' },
+                { id: '2', title: 'Grandma\'s Dal', description: 'Traditional recipe', cuisine: 'North Indian', prep_time: 15, cook_time: 30, difficulty: 'easy', image_url: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400' }
+            ];
+            container.innerHTML = demoRecipes.map(recipe => createRecipeCard(recipe)).join('');
+        }
+
+        function createRecipeCard(recipe) {
+            const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
+            return `
+                <div class="recipe-card" onclick="viewRecipe('${recipe.id}')">
+                    <div class="recipe-image">
+                        <img src="${recipe.image_url || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'}" alt="${recipe.title}">
+                        <span class="recipe-badge">${recipe.difficulty || 'Easy'}</span>
+                    </div>
+                    <div class="recipe-content">
+                        <h3>${recipe.title}</h3>
+                        <p>${recipe.description || ''}</p>
+                        <div class="recipe-meta">
+                            <span><i class="fas fa-clock"></i> ${totalTime} min</span>
+                        </div>
+                        <span class="recipe-region">${recipe.cuisine || 'Indian'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function viewRecipe(id) {
+            window.location.href = `recipe.html?id=${id}`;
+        }
+    </script>
+</body>
+</html>
+

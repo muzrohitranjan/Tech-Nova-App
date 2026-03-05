@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Nova - Indian Cultural Recipe Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Tech Nova</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="categories.html">Recipes</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="submit.html">Submit Recipe</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-auth">
+                <button class="btn-login" id="loginBtn">Login</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="my-recipes.html"><i class="fas fa-book"></i> My Recipes</a>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Discover the Richness of <span>Indian Cuisine</span></h1>
+            <p>Preserving traditional recipes and cultural stories from every corner of India</p>
+            <div class="hero-search">
+                <input type="text" id="heroSearch" placeholder="Search for recipes, ingredients, or regions...">
+                <button class="search-btn" onclick="searchRecipes()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Recipes</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">28</span>
+                    <span class="stat-label">States</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Cultures</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recipe Categories</h2>
+                <p>Explore our collection by meal type</p>
+            </div>
+            <div class="categories-grid">
+                <a href="categories.html?category=breakfast" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h3>Breakfast</h3>
+                    <p>Start your day with traditional morning dishes</p>
+                </a>
+                <a href="categories.html?category=lunch" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Lunch</h3>
+                    <p>Wholesome midday meals from around India</p>
+                </a>
+                <a href="categories.html?category=dinner" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3>Dinner</h3>
+                    <p>Delicious evening recipes and thalis</p>
+                </a>
+                <a href="categories.html?category=snacks" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <h3>Snacks</h3>
+                    <p>Tasty bites and street food favorites</p>
+                </a>
+                <a href="categories.html?category=desserts" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <h3>Desserts</h3>
+                    <p>Sweet treats and traditional mithai</p>
+                </a>
+                <a href="categories.html?category=regional" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Regional</h3>
+                    <p>Dishes from South Indian to Punjabi</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Recipes -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Recipes</h2>
+                <p>Handpicked favorites from our collection</p>
+            </div>
+            <div class="recipes-grid" id="featuredRecipes">
+                <!-- Recipes will be loaded dynamically -->
+            </div>
+            <div class="view-all-container">
+                <a href="categories.html" class="btn-view-all">View All Recipes <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional Dishes -->
+    <section class="regional-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Regional Cuisines</h2>
+                <p>Explore flavors from different states of India</p>
+            </div>
+            <div class="regional-grid">
+                <a href="search.html?region=south-indian" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1630383249896-424e482df921?w=400" alt="South Indian">
+                    <div class="regional-overlay">
+                        <h3>South Indian</h3>
+                        <span>Dosa, Idli, Sambar & more</span>
+                    </div>
+                </a>
+                <a href="search.html?region=north-indian" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400" alt="North Indian">
+                    <div class="regional-overlay">
+                        <h3>North Indian</h3>
+                        <span>Butter Chicken, Naan & more</span>
+                    </div>
+                </a>
+                <a href="search.html?region=gujarati" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1695504236952-16e6d11f6c44?w=400" alt="Gujarati">
+                    <div class="regional-overlay">
+                        <h3>Gujarati</h3>
+                        <span>Dhokla, Thepla & more</span>
+                    </div>
+                </a>
+                <a href="search.html?region=maharashtrian" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1567337710282-00832b415979?w=400" alt="Maharashtrian">
+                    <div class="regional-overlay">
+                        <h3>Maharashtrian</h3>
+                        <span>Puran Poli, Vada Pav & more</span>
+                    </div>
+                </a>
+                <a href="search.html?region=rajasthani" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1599043513900-489f22695880?w=400" alt="Rajasthani">
+                    <div class="regional-overlay">
+                        <h3>Rajasthani</h3>
+                        <span>Daal Baati, Gatte & more</span>
+                    </div>
+                </a>
+                <a href="search.html?region=bengali" class="regional-card">
+                    <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=400" alt="Bengali">
+                    <div class="regional-overlay">
+                        <h3>Bengali</h3>
+                        <span>Rosogolla, Macher Jhol & more</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Share Your Family Recipes</h2>
+                <p>Preserve your cultural heritage by sharing traditional recipes passed down through generations</p>
+                <a href="submit.html" class="btn-cta">
+                    <i class="fas fa-plus-circle"></i> Submit Your Recipe
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Tech Nova</span>
+                    </a>
+                    <p>Preserving Indian culinary heritage through digital documentation</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Recipes</a></li>
+                        <li><a href="search.html">Search</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="categories.html?category=breakfast">Breakfast</a></li>
+                        <li><a href="categories.html?category=lunch">Lunch</a></li>
+                        <li><a href="categories.html?category=dinner">Dinner</a></li>
+                        <li><a href="categories.html?category=desserts">Desserts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-envelope"></i> info@technova.com</p>
+                    <p><i class="fas fa-phone"></i> +91 1234567890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tech Nova. Preserving Indian Culinary Heritage.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <p>Login to access your recipes</p>
+            </div>
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            <div class="auth-switch">
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeRegisterModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <p>Join our community</p>
+            </div>
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required placeholder="Create a password">
+                </div>
+                <button type="submit" class="btn-submit">Register</button>
+            </form>
+            <div class="auth-switch">
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+

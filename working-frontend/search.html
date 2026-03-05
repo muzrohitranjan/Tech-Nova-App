@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Recipes - Tech Nova</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Tech Nova</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categories.html">Recipes</a></li>
+                <li><a href="search.html" class="active">Search</a></li>
+                <li><a href="submit.html">Submit Recipe</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-auth">
+                <button class="btn-login" id="loginBtn">Login</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="my-recipes.html"><i class="fas fa-book"></i> My Recipes</a>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <section class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search recipes by name, ingredient, or region...">
+            <button onclick="performSearch()">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-section">
+            <h3><i class="fas fa-filter"></i> Filters</h3>
+            
+            <div class="filter-group">
+                <label>Region / Cuisine</label>
+                <select id="regionFilter">
+                    <option value="">All Regions</option>
+                    <option value="south-indian">South Indian</option>
+                    <option value="north-indian">North Indian</option>
+                    <option value="gujarati">Gujarati</option>
+                    <option value="maharashtrian">Maharashtrian</option>
+                    <option value="rajasthani">Rajasthani</option>
+                    <option value="bengali">Bengali</option>
+                    <option value="hyderabadi">Hyderabadi</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Category</label>
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="desserts">Desserts</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Difficulty</label>
+                <select id="difficultyFilter">
+                    <option value="">Any Difficulty</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="filter-checkboxes">
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="vegetarianFilter">
+                    <label for="vegetarianFilter">Vegetarian</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="veganFilter">
+                    <label for="veganFilter">Vegan</option>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="search-results">
+            <div class="search-results-header">
+                <h2>Search Results</h2>
+                <span class="results-count" id="resultsCount">0 recipes found</span>
+            </div>
+            <div class="recipes-grid" id="searchResults">
+                <!-- Results loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Tech Nova</span>
+                    </a>
+                    <p>Preserving Indian culinary heritage</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Recipes</a></li>
+                        <li><a href="search.html">Search</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tech Nova. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
+
