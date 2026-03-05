@@ -1,91 +1,93 @@
-import { useState, useEffect } from "react"
-import { supabase } from "./supabaseClient"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Recipe from "./pages/Recipe";
+import RecipeList from "./pages/RecipeList";
+import RecipeDetail from "./pages/RecipeDetail";
+import CookingSession from "./pages/CookingSession";
+import Completion from "./pages/Completion";
+import SavedRecipes from "./pages/SavedRecipes";
+import LanguageSelect from "./pages/LanguageSelect";
 
 function App() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [message, setMessage] = useState("")
-  const [user, setUser] = useState(null)
-
-  // Check session on load
-  useEffect(() => {
-    const getSession = async () => {
-      const { data } = await supabase.auth.getSession()
-      setUser(data.session?.user || null)
-    }
-    getSession()
-  }, [])
-
-  const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) return setMessage(error.message)
-    setMessage("Signup successful")
-  }
-
-  const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    if (error) return setMessage(error.message)
-    setUser(data.user)
-    setMessage("Login successful")
-  }
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    setUser(null)
-    setMessage("Logged out")
-  }
-
-  const checkProfiles = async () => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-
-    console.log("Logged in user:", user)
-    console.log("Profiles result:", data)
-    console.log("Error:", error)
-  }
-
   return (
-    <div style={{ padding: "40px" }}>
-      <h2>Auth & RLS Test System</h2>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route
+          path="/language"
+          element={
+            <ProtectedRoute>
+              <LanguageSelect />
+            </ProtectedRoute>
+          }
+        />
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br /><br />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+        <Route
+          path="/recipe"
+          element={
+            <ProtectedRoute>
+              <Recipe />
+            </ProtectedRoute>
+          }
+        />
 
-      <button onClick={handleSignup}>Sign Up</button>
-      <button onClick={handleLogin} style={{ marginLeft: "10px" }}>
-        Login
-      </button>
-      <button onClick={handleLogout} style={{ marginLeft: "10px" }}>
-        Logout
-      </button>
+        <Route
+          path="/recipes"
+          element={
+            <ProtectedRoute>
+              <RecipeList />
+            </ProtectedRoute>
+          }
+        />
 
-      <br /><br />
+        <Route
+          path="/recipes/:id"
+          element={
+            <ProtectedRoute>
+              <RecipeDetail />
+            </ProtectedRoute>
+          }
+        />
 
-      <button onClick={checkProfiles}>Check Profiles (RLS Test)</button>
-
-      <p>{message}</p>
-
-      {user && (
-        <p>
-          Logged in as: <strong>{user.email}</strong>
-        </p>
-      )}
-    </div>
-  )
+        <Route
+          path="/cook/:id"
+          element={
+            <ProtectedRoute>
+              <CookingSession />
+            </ProtectedRoute>
+          }
+        />
+       
+        <Route
+  path="/completion"
+  element={
+    <ProtectedRoute>
+      <Completion />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/saved"
+  element={
+    <ProtectedRoute>
+      <SavedRecipes />
+    </ProtectedRoute>
+  }
+/>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
