@@ -6,6 +6,7 @@ import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import SearchBar from '../components/ui/SearchBar'
 import RecipeCard from '../components/ui/RecipeCard'
+import { languageFontClass, t } from '../utils/i18n'
 
 const greetingByLanguage = {
   English: ['Hello', 'Welcome', 'Hi there'],
@@ -28,6 +29,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [greetingIndex, setGreetingIndex] = useState(0)
   const [selectedLanguage, setSelectedLanguage] = useState('English')
+  const [isAdmin, setIsAdmin] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -50,11 +52,12 @@ function Dashboard() {
       }
 
       setEmail(user.email || '')
+      setIsAdmin(user.app_metadata?.role === 'admin')
 
       const { data: recipesData, error: recipesError } = await supabase
         .from('recipes')
-        .select('id, title, ingredients')
-        .eq('user_id', user.id)
+        .select('id, title, description')
+        .eq('created_by', user.id)
 
       if (recipesError) {
         setMessage(`Error: ${recipesError.message}`)
@@ -71,24 +74,23 @@ function Dashboard() {
     loadDashboardData()
   }, [])
 
- 
-
   const selectedGreetings = greetingByLanguage[selectedLanguage] || greetingByLanguage.English
-   useEffect(() => {
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setGreetingIndex((currentIndex) => (currentIndex + 1) % selectedGreetings.length)
     }, 2000)
 
     return () => clearInterval(interval)
-  }, [selectedGreetings])
+  }, [selectedGreetings.length])
 
   const filteredRecipes = useMemo(() => {
     if (!search.trim()) return recipes
     const query = search.toLowerCase()
     return recipes.filter((recipe) => {
       const title = recipe.title?.toLowerCase() || ''
-      const ingredients = recipe.ingredients?.toLowerCase() || ''
-      return title.includes(query) || ingredients.includes(query)
+      const description = recipe.description?.toLowerCase() || ''
+      return title.includes(query) || description.includes(query)
     })
   }, [recipes, search])
 
@@ -97,45 +99,63 @@ function Dashboard() {
     navigate('/')
   }
 
-  const displayName = email?.split('@')[0] || 'Lavanya'
+  const displayName = email?.split('@')[0] || 'chef'
 
   return (
     <AppShell
-      title="Dashboard"
-      subtitle={`Hi ${displayName} — plan, cook, and save your recipes.`}
-      actions={<Button variant="secondary" onClick={handleLogout}>Logout</Button>}
+      title={t(selectedLanguage, 'dashboardTitle')}
+      subtitle={t(selectedLanguage, 'dashboardSubtitle')}
+      actions={<Button variant="secondary" onClick={handleLogout}>{t(selectedLanguage, 'logout')}</Button>}
     >
-      <div className="stack">
+      <div className={`stack ${languageFontClass[selectedLanguage] || ""}`}>
         <Card className="greeting-card">
           <div className="greeting-hero">
             <p key={greetingIndex} className="greeting-line">{selectedGreetings[greetingIndex]}, {displayName} 👋</p>
-            <h2 className="section-title greeting-title">Welcome to your kitchen assistant</h2>
-            <p className="greeting-subtext">Quickly jump into recipe creation, search what you saved, or start voice flow.</p>
+            <h2 className="section-title greeting-title">{t(selectedLanguage, 'welcomeKitchen')}</h2>
+            <p className="greeting-subtext">{t(selectedLanguage, 'followFlow')}</p>
           </div>
         </Card>
 
         <section className="action-grid">
-          <Card className="action-card card-interactive" onClick={() => navigate('/recipe')}>
+          <Card className="action-card card-interactive" onClick={() => navigate('/voice-memo')}>
             <div>
-              <strong>Create Recipe</strong>
-              <p>Start a new structured recipe draft.</p>
+              <strong>{t(selectedLanguage, 'recordMemo')}</strong>
+              <p>{t(selectedLanguage, 'recordDesc')}</p>
             </div>
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">🎤</span>
           </Card>
-          <Card className="action-card card-interactive" onClick={() => navigate('/recipes')}>
+
+          <Card className="action-card card-interactive" onClick={() => navigate('/guided-cooking')}>
             <div>
-              <strong>Browse Recipes</strong>
-              <p>Review and open saved recipes.</p>
+              <strong>{t(selectedLanguage, 'startGuided')}</strong>
+              <p>{t(selectedLanguage, 'startGuidedDesc')}</p>
             </div>
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">🍳</span>
           </Card>
-          <Button className="mic-button" onClick={() => navigate('/recipe')}>🎙️ Start Voice Capture</Button>
+
+          <Card className="action-card card-interactive" onClick={() => navigate('/saved')}>
+            <div>
+              <strong>{t(selectedLanguage, 'viewSaved')}</strong>
+              <p>{t(selectedLanguage, 'viewSavedDesc')}</p>
+            </div>
+            <span aria-hidden="true">📚</span>
+          </Card>
+
+          {isAdmin && (
+            <Card className="action-card card-interactive" onClick={() => navigate('/admin')}>
+              <div>
+                <strong>{t(selectedLanguage, 'adminDashboard')}</strong>
+                <p>{t(selectedLanguage, 'adminDesc')}</p>
+              </div>
+              <span aria-hidden="true">🛠️</span>
+            </Card>
+          )}
         </section>
 
         <SearchBar
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search recipes by title or ingredients"
+          placeholder={t(selectedLanguage, 'searchRecipes')}
         />
 
         {message && (
@@ -145,21 +165,21 @@ function Dashboard() {
         )}
 
         <section className="stack-tight">
-          <h2 className="section-title">Your Recipes</h2>
+          <h2 className="section-title">{t(selectedLanguage, 'recentRecipes')}</h2>
           {loading ? (
             <Card>
-              <p className="helper-text">Loading your recipes...</p>
+              <p className="helper-text">{t(selectedLanguage, 'loadingRecipes')}</p>
             </Card>
           ) : filteredRecipes.length === 0 ? (
             <Card>
-              <p className="empty-state">No recipes found. Create one to get started.</p>
+              <p className="empty-state">{t(selectedLanguage, 'noRecipes')}</p>
             </Card>
           ) : (
             filteredRecipes.map((recipe, index) => (
               <RecipeCard
                 key={recipe.id || `${recipe.title}-${index}`}
                 title={recipe.title}
-                ingredients={recipe.ingredients}
+                ingredients={recipe.description}
                 onClick={() => navigate(recipe.id ? `/recipes/${recipe.id}` : '/recipe')}
               />
             ))

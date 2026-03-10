@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import AppShell from '../components/ui/AppShell'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
+import { languageFontClass, t } from '../utils/i18n'
 
 const languageOptions = [
   { label: 'English', native: 'English' },
@@ -27,20 +28,25 @@ function LanguageSelect() {
   }
 
   return (
-    <AppShell title="Choose Your Language" subtitle="Pick your preferred language for cooking guidance.">
-      <div className="stack-tight">
+    <AppShell
+      title={t(selectedLanguage, 'languageTitle')}
+      subtitle={t(selectedLanguage, 'languageSubtitle')}
+    >
+      <div className={`stack-tight ${languageFontClass[selectedLanguage] || ''}`}>
         {languageOptions.map((language) => (
           <Card
             key={language.label}
             className={`language-card card-interactive ${selectedLanguage === language.label ? 'language-card-selected' : ''}`}
             onClick={() => setSelectedLanguage(language.label)}
           >
-            <p className="language-label">{language.label}</p>
-            <p className="language-native">{language.native}</p>
+            <div className="language-row">
+              <span>{language.label}</span>
+              <span className="language-native">{language.native}</span>
+            </div>
           </Card>
         ))}
 
-        <Button onClick={handleContinue}>Continue</Button>
+        <Button onClick={handleContinue}>{t(selectedLanguage, 'continue')}</Button>
       </div>
     </AppShell>
   )

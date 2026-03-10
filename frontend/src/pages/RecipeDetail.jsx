@@ -12,6 +12,15 @@ function toLines(value) {
     .filter(Boolean)
 }
 
+function parseDescription(description) {
+  const value = description || ''
+  const [rawIngredients, rawSteps = ''] = value.split(/\n\s*steps:\s*\n/i)
+  const ingredients = rawIngredients.replace(/^ingredients:\s*/i, '').trim()
+  const steps = rawSteps.trim()
+
+  return { ingredients, steps }
+}
+
 function RecipeDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -26,7 +35,7 @@ function RecipeDetail() {
 
       const { data, error: fetchError } = await supabase
         .from('recipes')
-        .select('id, title, ingredients, steps')
+        .select('id, title, description')
         .eq('id', id)
         .single()
 
@@ -44,8 +53,9 @@ function RecipeDetail() {
     fetchRecipe()
   }, [id])
 
-  const ingredientsList = useMemo(() => toLines(recipe?.ingredients), [recipe])
-  const stepList = useMemo(() => toLines(recipe?.steps), [recipe])
+  const parsed = useMemo(() => parseDescription(recipe?.description), [recipe])
+  const ingredientsList = useMemo(() => toLines(parsed.ingredients), [parsed.ingredients])
+  const stepList = useMemo(() => toLines(parsed.steps), [parsed.steps])
 
   if (loading) {
     return (
